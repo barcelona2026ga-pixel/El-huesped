@@ -1,0 +1,350 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: #05020a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    border: 4px solid #3b0764;
+    border-radius: 8px;
+    box-shadow: 0 0 35px rgba(112, 26, 117, 0.5);
+    background-color: #000;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Capas Superpuestas (Overlays) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(9, 4, 19, 0.88);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Menu Principal */
+.game-title {
+    font-size: 52px;
+    color: #ef4444;
+    text-shadow: 0 0 15px #991b1b, 3px 3px 0 #000;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+}
+
+.game-subtitle {
+    font-size: 16px;
+    color: #a855f7;
+    margin-bottom: 30px;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 260px;
+}
+
+.btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(180deg, #7e22ce 0%, #581c87 100%);
+    border: 2px solid #a855f7;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background: linear-gradient(180deg, #9333ea 0%, #6b21a8 100%);
+    box-shadow: 0 0 12px #a855f7;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+    border-color: #6b7280;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(180deg, #4b5563 0%, #374151 100%);
+    box-shadow: 0 0 12px #9ca3af;
+}
+
+/* Caja de Historia Principal */
+.dialog-box {
+    width: 80%;
+    max-width: 600px;
+    background: #111827;
+    border: 2px solid #7c3aed;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+    text-align: center;
+}
+
+.dialog-box h2 {
+    color: #f59e0b;
+    margin-bottom: 12px;
+}
+
+.dialog-box p {
+    color: #e5e7eb;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Modales (Puzles y Configuracion) */
+.puzzle-box, .settings-box {
+    width: 440px;
+    background: #0f172a;
+    border: 2px solid #38bdf8;
+    border-radius: 8px;
+    padding: 20px;
+    color: #f8fafc;
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+}
+
+.puzzle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+}
+
+.puzzle-header h3 {
+    color: #38bdf8;
+    font-size: 15px;
+}
+
+.timer-display {
+    color: #fbbf24;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.question-text {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #f1f5f9;
+    line-height: 1.4;
+}
+
+#puzzle-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#puzzle-answer {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #475569;
+    background-color: #1e293b;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+}
+
+#puzzle-feedback {
+    margin-top: 10px;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+/* Ajustes de Configuracion */
+.setting-item {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.setting-item label {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.diff-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-diff {
+    flex: 1;
+    padding: 6px;
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #94a3b8;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-diff.active {
+    background: #0284c7;
+    color: #fff;
+    border-color: #38bdf8;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+/* HUD Overlay e Interfaz Superior e Inferior */
+.hud-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hud-bottom-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.hud-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hud-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hud-label {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.hud-value {
+    font-size: 12px;
+    font-weight: bold;
+    color: #f8fafc;
+}
+
+.hearts {
+    color: #ef4444;
+}
+
+.warning {
+    color: #f59e0b;
+}
+
+.btn-icon {
+    pointer-events: auto;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.hud-middle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.prompt-box {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #a855f7;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.key-badge {
+    background: #7e22ce;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+/* CAJA DE DIALOGOS INFERIOR UBICADA ABAJO DEL TODO */
+.bottom-dialog {
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid #7c3aed;
+    border-radius: 6px;
+    padding: 8px 14px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+
+.msg-speaker {
+    color: #f59e0b;
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.msg-text {
+    color: #e2e8f0;
+    font-size: 12px;
+    line-height: 1.3;
+}

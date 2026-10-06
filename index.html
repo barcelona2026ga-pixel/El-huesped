@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Huesped - Escape Room 2D</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Canvas Principal -->
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
+
+        <!-- Menu Principal -->
+        <div id="main-menu" class="overlay">
+            <h1 class="game-title">EL HUESPED</h1>
+            <p class="game-subtitle">Escape Room & Suspenso Matematico</p>
+            <div class="menu-buttons">
+                <button id="btn-start-game" class="btn">INICIAR AVENTURA</button>
+                <button id="btn-open-settings-main" class="btn btn-secondary">CONFIGURACION</button>
+            </div>
+        </div>
+
+        <!-- Superposicion de Historia Introductoria y Epilogo -->
+        <div id="story-overlay" class="overlay hidden">
+            <div class="dialog-box">
+                <h2 id="speaker-name">Misterio</h2>
+                <p id="story-text">Una noche lluviosa caminas por la calle sin saber que te espera...</p>
+                <button id="btn-next-story" class="btn">CONTINUAR ▶</button>
+            </div>
+        </div>
+
+        <!-- Panel del Puzle Matematico / Cerrojo Final -->
+        <div id="puzzle-modal" class="overlay hidden">
+            <div class="puzzle-box">
+                <div class="puzzle-header">
+                    <h3 id="puzzle-title">CAJA FUERTE DE SEGURIDAD</h3>
+                    <span id="puzzle-difficulty">Nivel: Normal</span>
+                </div>
+                <div class="timer-display">Tiempo restante: <span id="timer-count">20</span>s</div>
+                <p id="puzzle-question" class="question-text">Cargando acertijo...</p>
+                <form id="puzzle-form">
+                    <input type="text" id="puzzle-answer" placeholder="Ingresa la respuesta" autocomplete="off" required>
+                    <button type="submit" class="btn">DESBLOQUEAR</button>
+                </form>
+                <p id="puzzle-feedback"></p>
+            </div>
+        </div>
+
+        <!-- Menu de Configuracion -->
+        <div id="settings-modal" class="overlay hidden">
+            <div class="settings-box">
+                <h2>CONFIGURACION DE JUEGO</h2>
+                <div class="setting-item">
+                    <label for="slider-volume">Volumen de Sonido:</label>
+                    <input type="range" id="slider-volume" min="0" max="100" value="50">
+                    <span id="val-volume">50%</span>
+                </div>
+                <div class="setting-item">
+                    <label for="slider-brightness">Brillo Pantalla:</label>
+                    <input type="range" id="slider-brightness" min="30" max="100" value="70">
+                    <span id="val-brightness">70%</span>
+                </div>
+                <div class="setting-item">
+                    <label>Dificultad Puzles:</label>
+                    <div class="diff-buttons">
+                        <button class="btn-diff" data-diff="FACIL">Facil</button>
+                        <button class="btn-diff active" data-diff="NORMAL">Normal</button>
+                        <button class="btn-diff" data-diff="DIFICIL">Dificil</button>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button id="btn-settings-continue" class="btn">APLICAR Y VOLVER</button>
+                    <button id="btn-menu-back" class="btn btn-secondary">MENU PRINCIPAL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HUD / Interfaz del Juego -->
+        <div id="ui-overlay" class="hud-overlay hidden">
+            <div class="hud-top">
+                <div class="hud-card">
+                    <span class="hud-label">HABITACION:</span>
+                    <span id="room-name" class="hud-value">1. Recibidor</span>
+                </div>
+                <div class="hud-card">
+                    <span class="hud-label">VIDAS:</span>
+                    <span id="lives-display" class="hud-value hearts">❤❤❤</span>
+                </div>
+                <div class="hud-card">
+                    <span class="hud-label">PUNTOS:</span>
+                    <span id="score-display" class="hud-value">0</span>
+                </div>
+                <div class="hud-card">
+                    <span class="hud-label">ASESINO:</span>
+                    <span id="killer-timer" class="hud-value warning">60s</span>
+                </div>
+            </div>
+
+            <!-- Prompts de Interaccion -->
+            <div class="hud-middle">
+                <div id="interaction-prompt" class="prompt-box hidden">
+                    Presiona <span class="key-badge">E</span> para interactuar
+                </div>
+            </div>
+
+            <!-- Zona Inferior: Inventario y Caja de Dialogos del Sistema -->
+            <div class="hud-bottom-container">
+                <div id="bottom-message-box" class="bottom-dialog">
+                    <span id="bottom-message-speaker" class="msg-speaker">SISTEMA:</span>
+                    <span id="bottom-message-text" class="msg-text">Explora la mansion y busca pistas para mecapar.</span>
+                </div>
+
+                <div class="hud-bottom">
+                    <div class="hud-card inventory-card">
+                        <span class="hud-label">LLAVES:</span>
+                        <span id="keys-display" class="hud-value">Ninguna</span>
+                    </div>
+                    <button id="btn-in-game-settings" class="btn-icon">⚙️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
